@@ -5,15 +5,15 @@
     </div>
     <div class="form">
       <el-input placeholder="用户名／邮箱／手机号" class="form-input"></el-input>
-      <el-input placeholder="密码" class="form-input"></el-input>
+      <el-input type="password" placeholder="密码" class="form-input"></el-input>
     </div>
     <div class="getLogin clear">
       <el-checkbox label="下次自动等录"></el-checkbox>
     </div>
-    <el-button class="goToLogin">登录</el-button>
+    <el-button class="goToLogin" @click="goLogin()">登录</el-button>
     <div class="tools-test">
       <router-link :to="{ path: ''}" class="fl">注册</router-link>
-      <router-link :to="{ path: ''}" class="fr">登录</router-link>
+      <router-link :to="{ path: '/user/find'}" class="fr">忘记密码？</router-link>
     </div>
   </div>
 </template>
@@ -29,16 +29,33 @@
       }
     },
     mounted() {
-
+      console.log(this.$tools.isTel('15024219293'));
     },
     methods: {
-
+      goLogin() {
+        switch (true) {
+          case !this.$tools.isTel(this.username):
+            this.$message({
+              message: '手机格式不正确',
+              type: 'warning',
+              duration: 2000
+            });
+            return false;
+          case !this.$tools.isEmail(this.username):
+            this.$message({
+              message: '邮箱格式不正确',
+              type: 'warning',
+              duration: 2000
+            });
+            return false;
+        }
+      }
     }
   }
 </script>
 
 <style type="text/css">
-  /* login-tools start */
+  /* login-tool start */
   .login-tools {
     margin: 32px 10px;
   }
@@ -56,6 +73,7 @@
   .form .form-input .el-input__inner {
     border-radius: 0px;
     border: none;
+    font-weight: bold;
   }
   .login-tools .getLogin {
     text-align: left;
@@ -69,7 +87,15 @@
     border: 1px solid #ebca25;
   }
   .tools-test {
-    margin-top: 10px;
+    margin-top: 40px;
   }
-  /* login-tools end */
+  /* login-tool end */
+</style>
+
+<style type="text/css">
+  /* el-message start */
+  .el-message {
+    min-width: 305px;
+  }
+  /* el-message end */
 </style>

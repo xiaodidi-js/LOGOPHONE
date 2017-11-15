@@ -18,6 +18,11 @@ import ElementUI from 'element-ui'
 //  导入请求地址
 import port from './common/port_url'
 
+//  导入API
+import { tool_verify } from './api/tool'
+
+Vue.prototype.$tools = tool_verify;
+
 //  导入swiper样式
 require('swiper/dist/css/swiper.css')
 
